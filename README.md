@@ -86,3 +86,8 @@ config.action_mailer.smtp_settings = {
 docker-compose up -d
 ```
 And view in your browser in http://localhost:3000/
+
+## Run only the console of your Rails application
+```
+docker-compose run --rm web rails c && docker-compose down
+```
