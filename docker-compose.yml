@@ -1,4 +1,3 @@
-
 version: '3.0'
 
 services:
@@ -9,9 +8,6 @@ services:
     volumes:
       - .:/app
     links:
-      - 'db:db'
-      - 'redis:redis'
-    depends_on:
       - db
       - redis
     environment:
@@ -29,6 +25,22 @@ services:
     command: redis-server
     volumes:
       - 'redis_data:/data'
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      RAILS_ENV: development
+    entrypoint: ./sidekiq-entrypoint.sh
 
   mailcatcher:
     image: yappabe/mailcatcher

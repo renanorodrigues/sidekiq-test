@@ -4,7 +4,9 @@ ENV INSTALL_PATH /app
 
 RUN apk add --update \
   postgresql-dev \
-  tzdata
+  tzdata \
+  nodejs \
+  yarn
 
 FROM base AS dependencies
 
@@ -12,7 +14,7 @@ RUN apk add --update build-base
 
 COPY Gemfile Gemfile.lock ./
 
-RUN bundle check || bundle install 
+RUN bundle check || bundle install
 
 FROM base
 
