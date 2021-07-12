@@ -7,7 +7,7 @@ services:
       - 3000:3000
     volumes:
       - .:/app
-    links:
+    depends_on:
       - db
       - redis
     environment:
@@ -21,7 +21,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   redis:
-    image: redis:5.0.7
+    image: redis:6.2-alpine
     command: redis-server
     volumes:
       - 'redis_data:/data'
